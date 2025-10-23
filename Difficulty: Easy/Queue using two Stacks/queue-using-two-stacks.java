@@ -1,19 +1,19 @@
+import java.util.ArrayDeque;
+import java.util.Deque;
 class StackQueue {
-    private Stack<Integer> s1;
-    private Stack<Integer> s2; 
+    private Deque<Integer> in;
+    private Deque<Integer> out;
     public StackQueue() {
-        s1 = new Stack<>();
-        s2 = new Stack<>();
+        in = new ArrayDeque<>();
+        out = new ArrayDeque<>();
     }
-    public void push(int x) {
-        s1.push(x);
+    public void Push(int x) {
+        in.push(x);
     }
-    public int pop() {
-        if (s2.isEmpty()) {
-            while (!s1.isEmpty()) {
-                s2.push(s1.pop());
-            }
+    public int Pop() {
+        if (out.isEmpty()) {
+            while (!in.isEmpty()) out.push(in.pop());
         }
-        return s2.isEmpty() ? -1 : s2.pop();
+        return out.isEmpty() ? -1 : out.pop();
     }
 }
