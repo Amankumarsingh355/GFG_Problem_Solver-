@@ -18,7 +18,7 @@ public class Solution {
         while (right < ns) {
             int rIdx = s.charAt(right) - 'a';
             have[rIdx]++;
-            if (have[rIdx] == need[rIdx] && need[rIdx] > 0) formed++;
+            if (need[rIdx] > 0 && have[rIdx] == need[rIdx]) formed++;
             while (left <= right && formed == requiredTypes) {
                 int windowLen = right - left + 1;
                 if (windowLen < bestLen) {
@@ -27,7 +27,7 @@ public class Solution {
                 }
                 int lIdx = s.charAt(left) - 'a';
                 have[lIdx]--;
-                if (have[lIdx] < need[lIdx] && need[lIdx] > 0) formed--;
+                if (need[lIdx] > 0 && have[lIdx] < need[lIdx]) formed--;
                 left++;
             }
             right++;
