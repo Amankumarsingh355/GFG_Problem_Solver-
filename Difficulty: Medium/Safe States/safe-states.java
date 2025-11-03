@@ -1,26 +1,33 @@
-public class Solution {
+class Solution {
     public ArrayList<Integer> safeNodes(int V, int[][] edges) {
-        List<List<Integer>> rev = new ArrayList<>(V);
-        for (int i = 0; i < V; i++) rev.add(new ArrayList<>());
-        int[] outDeg = new int[V];
+        ArrayList<ArrayList<Integer>> revGraph = new ArrayList<>();
+        int[] outdeg = new int[V];
+        for (int i = 0; i < V; i++) 
+            revGraph.add(new ArrayList<>());
         for (int[] e : edges) {
             int u = e[0], v = e[1];
-            rev.get(v).add(u);
-            outDeg[u]++;
+            revGraph.get(v).add(u);
+            outdeg[u]++;
         }
-        ArrayDeque<Integer> q = new ArrayDeque<>();
-        for (int i = 0; i < V; i++) if (outDeg[i] == 0) q.add(i);
-        boolean[] safe = new boolean[V];
+        Queue<Integer> q = new LinkedList<>();
+        ArrayList<Integer> safe = new ArrayList<>();
+        for (int i = 0; i < V; i++) {
+            if (outdeg[i] == 0){
+                q.add(i);
+            } 
+        }
         while (!q.isEmpty()) {
-            int node = q.remove();
-            safe[node] = true;
-            for (int pred : rev.get(node)) {
-                outDeg[pred]--;
-                if (outDeg[pred] == 0) q.add(pred);
+            int node = q.poll();
+            safe.add(node);
+            
+            for (int parent : revGraph.get(node)) {
+                outdeg[parent]--;
+                if (outdeg[parent] == 0){
+                    q.add(parent);
+                }
             }
         }
-        ArrayList<Integer> result = new ArrayList<>();
-        for (int i = 0; i < V; i++) if (safe[i]) result.add(i);
-        return result;
+        Collections.sort(safe);
+        return safe;
     }
 }
