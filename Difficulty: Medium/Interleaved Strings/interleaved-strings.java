@@ -1,21 +1,22 @@
-class Solution {
-	public boolean isInterLeave(String a,String b,String c)
-	{
-        if (a.length() + b.length() != c.length()) {
-            return false;
+public class Solution {
+    public boolean isInterleave(String s1, String s2, String s3) {
+        if (s3.length() != s1.length() + s2.length()) return false;
+        if (s2.length() > s1.length()) {
+            String tmp = s1; s1 = s2; s2 = tmp;
         }
-        int[][] dp = new int[a.length()+1][b.length()+1];
-        for(int[] arr:dp) Arrays.fill(arr, -1);
-        return combination(dp, a,b,c, 0, 0, 0) == 1 ? true : false;
-	}
-    private int combination(int[][] dp, String a, String b, String c, int ai, int bi, int ci) {
-        if(ci == c.length()) return 1;
-        if(dp[ai][bi] != -1) return dp[ai][bi];
-        int take = 0;
-        if(ai < a.length() && a.charAt(ai) == c.charAt(ci))
-            take = combination(dp, a,b, c, ai+1, bi, ci+1);
-        if(take == 0 && bi < b.length() && b.charAt(bi) == c.charAt(ci))
-            take = combination(dp, a,b, c, ai, bi+1, ci+1);
-        return dp[ai][bi] = take;
+        int m = s1.length(), n = s2.length();
+        boolean[] dp = new boolean[n + 1];
+        dp[0] = true;
+        for (int j = 1; j <= n; j++) {
+            dp[j] = dp[j - 1] && s2.charAt(j - 1) == s3.charAt(j - 1);
+        }
+        for (int i = 1; i <= m; i++) {
+            dp[0] = dp[0] && s1.charAt(i - 1) == s3.charAt(i - 1);
+            for (int j = 1; j <= n; j++) {
+                char c = s3.charAt(i + j - 1);
+                dp[j] = (dp[j] && s1.charAt(i - 1) == c) || (dp[j - 1] && s2.charAt(j - 1) == c);
+            }
+        }
+        return dp[n];
     }
 }
