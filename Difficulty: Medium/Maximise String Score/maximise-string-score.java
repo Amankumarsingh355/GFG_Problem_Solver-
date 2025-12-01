@@ -1,95 +1,65 @@
-import java.util.*;
 public class Solution {
+    private int solve(int ind, String s, List<List<Integer>> adj,
+                      int[] pref, int[][] nextPos, int[] dp) {
+        int n = s.length();
+        if (ind == n - 1) return 0;
+        if (dp[ind] != -1) return dp[ind];
+        int best = 0;
+        int curr = s.charAt(ind) - 'a';
+        for (int targetChar : adj.get(curr)) {
+            int tIdx = targetChar - 'a';
+            int jumpInd = nextPos[ind][tIdx];
+            if (jumpInd == -1) continue;
+            int gain;
+            if (targetChar == s.charAt(ind)) {
+                gain = pref[jumpInd] - pref[ind + 1];
+            } else {
+                gain = pref[jumpInd] - pref[ind];
+            }
+            gain += solve(jumpInd, s, adj, pref, nextPos, dp);
+            best = Math.max(best, gain);
+        }
+        dp[ind] = best;
+        return best;
+    }
     public int maxScore(String s, char[][] jumps) {
         int n = s.length();
-        char[] chars = s.toCharArray();
-        Map<Character, List<Character>> jumpMap = new HashMap<>();
-        for (char[] jump : jumps) {
-            if (jump == null || jump.length < 2) continue;
-            jumpMap.computeIfAbsent(jump[0], k -> new ArrayList<>()).add(jump[1]);
-        }
-        Map<Character, List<Integer>> posMap = new HashMap<>();
-        for (int i = 0; i < n; i++) {
-            posMap.computeIfAbsent(chars[i], k -> new ArrayList<>()).add(i);
-        }
-        Map<Character, long[]> posPrefMap = new HashMap<>();
-        Map<Character, int[]> posIndexMap = new HashMap<>();
-        for (Map.Entry<Character, List<Integer>> e : posMap.entrySet()) {
-            char ch = e.getKey();
-            List<Integer> list = e.getValue();
-            long[] pref = new long[list.size() + 1];
-            int[] idxMap = new int[n];
-            for (int i = 0; i < list.size(); i++) {
-                pref[i + 1] = pref[i] + chars[list.get(i)];
-                idxMap[list.get(i)] = i;
+        List<List<Integer>> adj = new ArrayList<>(26);
+        for (int i = 0; i < 26; i++) adj.add(new ArrayList<>());
+        if (jumps != null) {
+            for (char[] p : jumps) {
+                if (p == null || p.length < 2) continue;
+                char from = p[0];
+                char to = p[1];
+                adj.get(from - 'a').add((int) to);
             }
-            posPrefMap.put(ch, pref);
-            posIndexMap.put(ch, idxMap);
         }
-        long[] prefix = new long[n + 1];
-        for (int i = 0; i < n; i++) prefix[i + 1] = prefix[i] + chars[i];
-        Map<Character, long[]> suffMaxMap = new HashMap<>();
-        for (Map.Entry<Character, List<Integer>> e : posMap.entrySet()) {
-            List<Integer> list = e.getValue();
-            long[] suff = new long[list.size()];
-            Arrays.fill(suff, Long.MIN_VALUE / 4);
-            suffMaxMap.put(e.getKey(), suff);
+        for (char c = 'a'; c <= 'z'; c++) {
+            adj.get(c - 'a').add((int) c);
         }
-        long[] dp = new long[n];
-        Arrays.fill(dp, 0L);
+        int[][] nextPos = new int[n][26];
+        for (int i = 0; i < n; i++) Arrays.fill(nextPos[i], -1);
+        int[] last = new int[26];
+        Arrays.fill(last, -1);
         for (int i = n - 1; i >= 0; i--) {
-            long best = 0L;
-            Set<Character> targets = new HashSet<>();
-            targets.add(chars[i]);
-            List<Character> jm = jumpMap.get(chars[i]);
-            if (jm != null) targets.addAll(jm);
-            for (char t : targets) {
-                List<Integer> tList = posMap.get(t);
-                if (tList == null) continue;
-                int k = upperBound(tList, i);
-                if (k >= tList.size()) continue;
-                long[] suff = suffMaxMap.get(t);
-                long bestForT = suff[k];
-                if (bestForT == Long.MIN_VALUE / 4) continue; 
-                int L = lowerBound(tList, i);
-                long sumTargetBefore = posPrefMap.get(t)[L];
-                long candidate = -prefix[i] + bestForT + sumTargetBefore;
-                if (candidate > best) best = candidate;
+            for (int c = 0; c < 26; c++) {
+                nextPos[i][c] = last[c];
             }
-            dp[i] = best;
-            char c = chars[i];
-            List<Integer> cList = posMap.get(c);
-            int idxInList = posIndexMap.get(c)[i];
-            long[] cPref = posPrefMap.get(c);
-            long value = prefix[i] - cPref[idxInList] + dp[i];
-            long[] cSuff = suffMaxMap.get(c);
-            if (idxInList == cSuff.length - 1) {
-                cSuff[idxInList] = value;
-            } else {
-                cSuff[idxInList] = Math.max(value, cSuff[idxInList + 1]);
-            }
+            last[s.charAt(i) - 'a'] = i;
         }
-        return (int) dp[0];
-    }
-    private static int lowerBound(List<Integer> list, int key) {
-        int l = 0, r = list.size();
-        while (l < r) {
-            int m = (l + r) >>> 1;
-            if (list.get(m) >= key) r = m; else l = m + 1;
-        }
-        return l;
-    }
-    private static int upperBound(List<Integer> list, int key) {
-        int l = 0, r = list.size();
-        while (l < r) {
-            int m = (l + r) >>> 1;
-            if (list.get(m) > key) r = m; else l = m + 1;
-        }
-        return l;
+        int[] pref = new int[n + 1];
+        for (int i = 0; i < n; i++) pref[i + 1] = pref[i] + s.charAt(i);
+        int[] dp = new int[n];
+        Arrays.fill(dp, -1);
+        return solve(0, s, adj, pref, nextPos, dp);
     }
     public static void main(String[] args) {
-        Solution sol = new Solution();
-        System.out.println(sol.maxScore("forgfg", new char[][]{{'f','r'},{'r','g'}}));
-        System.out.println(sol.maxScore("abcda", new char[][]{{'b','d'}}));
+        Solution ob = new Solution();
+        String s1 = "forgfg";
+        char[][] jumps1 = new char[][]{{'f','r'},{'r','g'}};
+        System.out.println(ob.maxScore(s1, jumps1));
+        String s2 = "abcda";
+        char[][] jumps2 = new char[][]{{'b','d'}};
+        System.out.println(ob.maxScore(s2, jumps2));
     }
 }
