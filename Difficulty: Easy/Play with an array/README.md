@@ -1,0 +1,9 @@
+<h2><a href="https://www.geeksforgeeks.org/problems/play-with-an-array/1?page=1&category=Arrays&difficulty=Basic,Easy&status=unsolved&sortBy=submissions">Play with an array</a></h2><h3>Difficulty Level : Difficulty: Easy</h3><hr><div class="problems_problem_content__Xm_eO"><p><span style="font-size: 14pt;">You are given an array <strong>arr[] </strong>of positive integers. You have to rearrange the array elements such that the number at the <strong>odd</strong> index is strictly greater than the number at the <strong>previous even</strong> index.<br></span><span style="font-size: 14pt;">If the array can be rearranged according to condition, then return <strong>true</strong> otherwise return <strong>false</strong>.</span></p>
+<p><span style="font-size: 14pt;"><strong>Examples:</strong></span></p>
+<pre><span style="font-size: 14pt;"><strong>Input:</strong> arr[] = [5, 4, 3, 2, 1]
+<strong>Output:</strong> true
+<strong>Explanation: </strong>The given array after modification will be as such: [4, 5, 2, 3, 1,].
+</span></pre>
+<pre><span style="font-size: 14pt;"><strong>Input:</strong> arr[] = [4, 3, 1, 1]
+<strong>Output:</strong> true<br></span><strong><span style="font-size: 14pt; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">Explanation: </span></strong><span style="font-size: 14pt; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">The given array after modification will be as such: [4, 5, 2, 3, 1,].</span></pre>
+<p><span style="font-size: 14pt;"><strong>Constraints:</strong><br>1 ≤ arr.size() ≤ 10<sup>5</sup><br>1 ≤ arr[i] ≤ 10<sup>6</sup></span></p></div><br><p><span style=font-size:18px><strong>Topic Tags : </strong><br><code>Arrays</code>&nbsp;<code>Data Structures</code>&nbsp;
