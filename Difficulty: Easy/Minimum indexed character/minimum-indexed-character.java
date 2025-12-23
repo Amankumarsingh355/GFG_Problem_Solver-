@@ -1,14 +1,17 @@
 class Solution {
-    public static int minIndexChar(String s1, String s2) {
-        Set<Character> set = new HashSet<>();
-        for (char ch : s2.toCharArray()) {
-            set.add(ch);
-        }
-        for (int i = 0; i < s1.length(); i++) {
-            if (set.contains(s1.charAt(i))) {
-                return i;
+    public static String printMinIndexChar(String S, String patt) {
+        int min_index=0;
+        ArrayList<Integer> index_str=new ArrayList<>();
+        for(int i=0;i<patt.length();i++){
+            String str_chr=patt.charAt(i)+"";
+            if(S.contains(str_chr)){
+                index_str.add(S.indexOf(patt.charAt(i)));
             }
         }
-        return -1;
+        if(index_str.size()>0){
+            Collections.sort(index_str);
+            return S.charAt(index_str.get(0))+"";
+        }
+        return "$";
     }
-}  
+}
