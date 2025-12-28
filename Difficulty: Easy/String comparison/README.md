@@ -1,13 +1,9 @@
-<h2><a href="https://www.geeksforgeeks.org/problems/string-comparison5858/1?page=1&category=Strings&difficulty=Basic,Easy&status=unsolved&sortBy=submissions">String comparison</a></h2><h3>Difficulty Level : Difficulty: Easy</h3><hr><div class="problems_problem_content__Xm_eO"><p>In a native language, the increasing order of priority of characters is a, b, c, d, e, f, g, h, i, j, k, l, m, n, ng, o, p, q, r, s, t, u, v, w, x, y, z. You are given two strings s1 and s2 and your task is to&nbsp;compare them on the basis of the given priority order.</p>
-<p><strong>Note:</strong> Function must return <strong>0</strong> if both the strings are equal, <strong>1</strong> if s1 is greater than s2, and <strong>-1</strong> if s1 is lesser than s2.</p>
-<p><strong>Example 1:</strong></p>
-<pre><strong>Input:</strong> s1 = "adding", s2 = "addio"
-<strong>Output:</strong> -1
-<strong>Explanation:</strong> 'o' has greater priority 
-than 'ng'</pre>
-<p><strong>Example 2:</strong></p>
-<pre><strong>Input:</strong> s1 = "abcng", s2 = "abcno"
-<strong>Output:</strong> 1
-<strong>Explanation:</strong> 'ng' has greater priority 
-than 'n'</pre>
-<p><strong>Your Task:&nbsp;&nbsp;</strong><br>You don't need to read input or print anything. Your task is to complete the function <strong>stringComparsion()</strong>&nbsp;which takes the two strings<strong> </strong>as input and returns the integer value.<br><br><strong>Expected Time Complexity:</strong>&nbsp;O(|s1 + s2|)<br><strong>Expected Auxiliary Space:</strong>&nbsp;O(1)<br><br><strong>Constraints:</strong><br>1 ≤ |s1|, |s2| ≤ 105<br>The string contains lower case English alphabets</p></div><p><span style=font-size:18px><strong>Company Tags : </strong><br><code>Microsoft</code>&nbsp;<br><p><span style=font-size:18px><strong>Topic Tags : </strong><br><code>Strings</code>&nbsp;<code>Data Structures</code>&nbsp;
+<h2><a href="https://www.geeksforgeeks.org/problems/string-comparison--141631/1?page=1&category=Strings&difficulty=Basic,Easy&status=unsolved&sortBy=submissions">String comparison</a></h2><h3>Difficulty Level : Difficulty: Easy</h3><hr><div class="problems_problem_content__Xm_eO"><p><span style="font-size: 18px;">You are given two strings <strong>s1</strong> and <strong>s2</strong> and your task is to&nbsp;compare them on the basis of the&nbsp;priority. </span></p>
+<p><span style="font-size: 18px;"><strong>Note:</strong> Function must return <strong>0</strong> if both the strings are equal, <strong>1</strong> if s1 is greater than s2, and <strong>-1</strong> if s1 is lesser than s2. </span></p>
+<p><span style="font-size: 18px;"><strong>Examples:</strong></span></p>
+<pre><span style="font-size: 18px;"><strong>Input:</strong> s1 = "adding", s2 = "addio"</span>
+<span style="font-size: 18px;"><strong>Output:</strong> -1
+<strong>Explanation:</strong> 'o' has greater priority than 'n'</span></pre>
+<pre><span style="font-size: 18px;"><strong>Input:</strong> s1 = "abcno", s2 = "abcng"<br></span><span style="font-size: 18px;"><strong>Output:</strong> 1
+</span><span style="font-size: 18px;"><strong>Explanation:</strong> 'o' has greater priority than 'g'<br></span></pre>
+<p><strong style="font-size: 18px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">Constraints:<br></strong><span style="font-size: 18px;">1 ≤ |s1|, |s2| ≤ 10</span><sup><span style="font-size: 15px;">3</span></sup><br><span style="font-size: 18px;">The string contains lower case English alphabets</span></p></div><br><p><span style=font-size:18px><strong>Topic Tags : </strong><br><code>Strings</code>&nbsp;<code>Data Structures</code>&nbsp;
