@@ -1,22 +1,20 @@
 class Solution {
-    int convertfive(int num) {
-        if(num == 0) return 5;
+    public static int convertFive(int n) {
         int rev = 0;
-        while(num > 0){
-            int temp = num % 10;
-            if(temp == 0) temp = 5;
-            rev *= 10;
-            rev += temp;
-            num /= 10;
+        int ans = 0;
+        while(n!=0){
+            int rem = n%10;
+            if(rem == 0){
+                rem = 5;
+            }
+            rev = rev * 10+rem;
+            n = n/10;
         }
-        num = 0;
-        while(rev > 0){
-            int temp = rev % 10;
-            if(temp == 0) temp = 5;
-            num *= 10;
-            num += temp;
-            rev /= 10;
+        while(rev != 0){
+            int rem = rev%10;
+            ans = ans*10+rem;
+            rev = rev/10;
         }
-        return num;
+        return ans;
     }
 }
