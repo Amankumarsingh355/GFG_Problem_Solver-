@@ -22,19 +22,15 @@ class Solution {
             }
         }
         return found;
-        
     }
       public static boolean checkNearby(char[][] mat, int i,int j, String word, int wordIndex, String notCheck, boolean[][] visited) {
         if(wordIndex>=word.length()){
             return true;
         }
-
         boolean right = false;
         boolean left = false;
         boolean up = false;
         boolean down = false;
-
-
         if(!Objects.equals(notCheck,"right") && j+1<mat[i].length && mat[i][j+1]==word.charAt(wordIndex) && !visited[i][j+1]) {
             visited[i][j+1] = true;
             right =  checkNearby(mat,i,j+1,word,wordIndex+1,"left",visited);
