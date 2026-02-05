@@ -1,37 +1,20 @@
 class Solution {
-    boolean check(int[] arr, int len, int k) {
-        int s = 0;
-        int e = len - 1;
-        while(e < arr.length) {
-            int zero = len - (arr[e] - (s > 0 ? arr[s - 1] : 0));
-            if(zero <= k) {
-                return true;
+    public int maxOnes(int[] arr, int k) {
+        int left = 0;
+        int zeroCount = 0;
+        int maxLen = 0;
+        for (int right = 0; right < arr.length; right++) {
+            if (arr[right] == 0) {
+                zeroCount++;
             }
-            s++;
-            e++;
-        }
-        return false;
-    }
-    public int maxOnes(int arr[], int k) {
-        int[] pref = new int[arr.length];
-        int sum = 0;
-        for(int i = 0; i < arr.length; i++) {
-            sum += arr[i];
-            pref[i] = sum;
-        }
-        int ans = 0;
-        int s = 1;
-        int e = arr.length;
-        while(s <= e) {
-            int mid = s + (e - s) / 2;
-            if(check(pref, mid, k)) {
-                ans = mid;
-                s = mid + 1;
+            while (zeroCount > k) {
+                if (arr[left] == 0) {
+                    zeroCount--;
+                }
+                left++;
             }
-            else {
-                e = mid - 1;
-            }
+            maxLen = Math.max(maxLen, right - left + 1);
         }
-        return ans;
+        return maxLen;
     }
 }
