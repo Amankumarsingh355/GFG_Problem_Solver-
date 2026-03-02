@@ -1,27 +1,41 @@
-public class Solution {
-    public int maxWater(int[] height) {
-        if (height == null || height.length < 3) return 0;
-        int left = 0, right = height.length - 1;
-        int leftMax = 0, rightMax = 0;
-        int trapped = 0;
-        while (left <= right) {
-            if (height[left] <= height[right]) {
-                if (height[left] >= leftMax) leftMax = height[left];
-                else trapped += leftMax - height[left];
-                left++;
-            } else {
-                if (height[right] >= rightMax) rightMax = height[right];
-                else trapped += rightMax - height[right];
-                right--;
+class Solution {
+    public int maxWater(int arr[]) 
+    {
+        int n= arr.length, sum=0;
+        int premax[]= new int[n];
+        int postmax[]= new int[n];
+        premax[0]=-1;
+        int m=arr[0];
+        postmax[n-1]=-1;
+        for(int x=1; x<n;x++)
+        {
+            if(arr[x]>m)
+            {
+                 premax[x]= -1;
+                 m=arr[x];
             }
+            else
+            premax[x]=m;
+           
         }
-        return trapped;
-    }
-    public static void main(String[] args) {
-        Solution s = new Solution();
-        System.out.println(s.maxWater(new int[]{3,0,1,0,4,0,2})); 
-        System.out.println(s.maxWater(new int[]{3,0,2,0,4}));
-        System.out.println(s.maxWater(new int[]{1,2,3,4})); 
-        System.out.println(s.maxWater(new int[]{2,1,5,3,1,0,4}));
+        m=arr[n-1];
+        
+        for(int x=n-2; x>=0;x--)
+        {
+            if(arr[x]>m)
+            {
+                 postmax[x]= -1;
+                 m=arr[x];
+            }
+            else
+                postmax[x]=m;
+           
+        }
+        for(int x=0; x<n;x++)
+        {
+            sum+= Math.max(Math.min(premax[x],postmax[x])-arr[x],0);
+        }
+        return sum;
     }
 }
+
