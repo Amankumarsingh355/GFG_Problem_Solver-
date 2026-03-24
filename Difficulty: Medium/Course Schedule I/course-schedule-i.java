@@ -1,26 +1,34 @@
 class Solution {
     public boolean canFinish(int n, int[][] prerequisites) {
-        List<List<Integer>> adj = new ArrayList<>(n);
-        for (int i = 0; i < n; i++) adj.add(new ArrayList<>());
-        int[] indeg = new int[n];
-
-        for (int[] p : prerequisites) {
-            int course = p[0], pre = p[1];
-            adj.get(pre).add(course);
-            indeg[course]++;
+        List<List<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            adj.add(new ArrayList<>());
         }
-        ArrayDeque<Integer> q = new ArrayDeque<>();
-        for (int i = 0; i < n; i++) if (indeg[i] == 0) q.add(i);
-
-        int seen = 0;
-        while (!q.isEmpty()) {
-            int u = q.remove();
-            seen++;
-            for (int v : adj.get(u)) {
-                indeg[v]--;
-                if (indeg[v] == 0) q.add(v);
+        int[] indegree = new int[n];
+        for (int[] pre : prerequisites) {
+            int course = pre[0];
+            int prereq = pre[1];
+            adj.get(prereq).add(course);
+            indegree[course]++;
+        }
+        Queue<Integer> q = new LinkedList<>();
+        for (int i = 0; i < n; i++) {
+            if (indegree[i] == 0) {
+                q.offer(i);
             }
         }
-        return seen == n;
+        int count = 0;
+        while (!q.isEmpty()) {
+            int curr = q.poll();
+            count++;     
+            for (int neighbor : adj.get(curr)) {
+                indegree[neighbor]--;
+                
+                if (indegree[neighbor] == 0) {
+                    q.offer(neighbor);
+                }
+            }
+        }
+        return count == n;
     }
-}
+} 
