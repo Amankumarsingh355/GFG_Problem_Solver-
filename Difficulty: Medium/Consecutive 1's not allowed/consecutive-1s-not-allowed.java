@@ -1,14 +1,14 @@
 class Solution {
     int countStrings(int n) {
-           int zerosend=1;
-        int onesend=1;
-        int sum=zerosend+onesend;
-        if(n==1)return sum;
-        for(int i=2;i<=n;i++){
-            onesend=zerosend;
-            zerosend=sum;
-            sum=zerosend+onesend;
+        // code here
+         if (n == 1) return 2;
+        int a = 2; 
+        int b = 3;
+        for (int i = 3; i <= n; i++) {
+            int c = a + b;
+            a = b;
+            b = c;
         }
-        return sum;
+        return b;
     }
 }
