@@ -9,6 +9,7 @@ class Solution {
             while((i<j) && arr[j]==1){
                 j-=1;
             }
+            
             if (i<j){
                 int temp=arr[i];
                 arr[i]=arr[j];
