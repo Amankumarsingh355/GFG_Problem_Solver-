@@ -1,23 +1,22 @@
 class Solution {
     public int smallestSubstring(String s) {
         int n = s.length();
-        int ans = Integer.MAX_VALUE;
-        int count0 = 0, count1 = 0, count2 = 0;
-        int l = 0;
-        for (int r = 0; r < n; r++) {
-            char c = s.charAt(r);
-            if (c == '0') count0++;
-            else if (c == '1') count1++;
-            else if (c == '2') count2++;
-            while (count0 > 0 && count1 > 0 && count2 > 0) {
-                ans = Math.min(ans, r - l + 1);
-                char leftChar = s.charAt(l);
-                if (leftChar == '0') count0--;
-                else if (leftChar == '1') count1--;
-                else count2--;
-                l++;
+        int left = 0;
+        int zero = 0, one = 0, two = 0;
+        int mn = Integer.MAX_VALUE;
+        for(int right=0;right<n;right++) {
+            char ch = s.charAt(right);
+            zero += (ch=='0') ? 1 : 0;
+            one += (ch=='1') ? 1 : 0;
+            two += (ch=='2') ? 1 : 0;
+            while(zero>0 && one>0 && two>0) {
+                mn = Math.min(mn, right-left+1);
+                char ch2 = s.charAt(left++);
+                zero -= (ch2=='0') ? 1 : 0;
+                one -= (ch2=='1') ? 1 : 0;
+                two -= (ch2=='2') ? 1 : 0;
             }
         }
-        return (ans == Integer.MAX_VALUE) ? -1 : ans;
+        return (mn==Integer.MAX_VALUE) ? -1 : mn;
     }
-}
+};
