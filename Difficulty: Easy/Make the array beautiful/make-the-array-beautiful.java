@@ -1,25 +1,17 @@
 class Solution {
-    public static ArrayList<Integer> makeBeautiful(int[] arr) {
-        ArrayList<Integer> list=new ArrayList<>();
-         if(arr.length==0)  return list; 
-        if(arr.length==1){
-            list.add(arr[0]);
-            return list;
-        }
-        Stack<Integer> st=new Stack<>();
-        for(int i=0;i<arr.length;i++){
-            if(st.isEmpty()) st.push(arr[i]);
-          else if(arr[i]<0 && st.peek()<0 || arr[i]>=0 && st.peek()>=0  ){
-                st.push(arr[i]);
+    List<Integer> makeBeautiful(int[] arr) {
+        int n = arr.length;
+        int i = 0;
+        List<Integer> ans = new ArrayList<>();
+        while(i < n){
+            if(!ans.isEmpty() && ((ans.get(ans.size() - 1) < 0 && arr[i] >= 0)
+                                || (ans.get(ans.size() - 1) >= 0 && arr[i] < 0))){
+                ans.remove(ans.size() - 1);
+            }else{
+                ans.add(arr[i]);
             }
-            else {
-                st.pop();
-            }
+            i++;
         }
-        while(!st.isEmpty()){
-            list.add(st.pop());
-        }
-        Collections.reverse(list);
-        return list;
+        return ans;
     }
 }
