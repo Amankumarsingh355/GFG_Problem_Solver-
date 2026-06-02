@@ -1,20 +1,18 @@
 class Solution {
-    public static int maxSumPairWithDifferenceLessThanK(int arr[], int N, int K) 
-    {
+    public int sumDiffPairs(int[] arr, int k) {
+        // code here
         Arrays.sort(arr);
-        int count = 0;
-        for(int i = N-1; i>=0;)
-        {
-            if(i-1 >=0 && arr[i] - arr[i-1] < K)
-            {
-                count = count + arr[i] + arr[i-1];
-                 i = i-2;
-            }
-            else
-            {
+        int n = arr.length;
+        int sum = 0, i = n-1;
+        while(i>0){
+            int diff = arr[i] - arr[i-1];
+            if(diff < k){
+                sum+=(arr[i]+arr[i-1]);
+                i -= 2;
+            } else {
                 i--;
             }
         }
-        return count;
+        return sum;
     }
 }
